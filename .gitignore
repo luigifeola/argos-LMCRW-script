@@ -1,0 +1,8 @@
+Plots
+*.png
+results
+.ipynb_checkpoints
+pycharm/Plots
+pycharm/__pycache__
+pycharm/.idea
+
