@@ -5,6 +5,8 @@ import sys
 from termcolor import colored
 
 window_size = 1
+debug_time = False
+time_window = 61
 
 
 def MSD_mean(main_folder, folder_experiments):
@@ -31,6 +33,11 @@ def MSD_mean(main_folder, folder_experiments):
                 exit(-1)
 
             np_position = np.load(os.path.join(main_folder, folder_experiments, fileName))
+
+            if debug_time:
+                print('\tWARNING: remove after test')
+                np_position = np_position[:time_window]
+
             print('\tnp_position.shape:', np_position.shape)
 
 
@@ -64,14 +71,14 @@ def MSD_mean(main_folder, folder_experiments):
             plt.title(fileName[:-4])
             plt.xlabel('time(s)' + r"$ 10^2$")
 
-            figName = exp_type + '_msd_mean_per_experiment_' + fileName[:-4] + '.png'
-            print(colored("\tSaving figure:", 'blue'), figName)
-            saveDir = os.path.join('Plots', folder_experiments.split('/')[1], sys._getframe().f_code.co_name)
+            fig_name = exp_type + '_msd_mean_per_experiment_' + fileName[:-4] + '.png'
+            print(colored("\tSaving figure:", 'blue'), fig_name)
+            save_dir = os.path.join('Plots', folder_experiments.split('/')[1], sys._getframe().f_code.co_name)
 
-            if not os.path.exists(saveDir):
-                os.makedirs(saveDir)
+            if not os.path.exists(save_dir):
+                os.makedirs(save_dir)
 
-            plt.savefig(os.path.join(saveDir, figName))
+            plt.savefig(os.path.join(save_dir, fig_name))
             # plt.show()
             plt.close()
 
@@ -100,6 +107,11 @@ def MSD_per_run(main_folder, folder_experiments):
                 exit(-1)
 
             np_position = np.load(os.path.join(main_folder, folder_experiments, fileName))
+
+            if debug_time:
+                print('\tWARNING: remove after test')
+                np_position = np_position[:time_window]
+
             print('\tnp_position.shape:', np_position.shape)
 
             plt.grid()
@@ -124,8 +136,8 @@ def MSD_per_run(main_folder, folder_experiments):
                 # print('\t msd_matrix.shape', msd_matrix.shape)
 
                 times = np.arange(window_size, msd_matrix_mean.size + window_size, window_size) * 10
-                plt.plot(times, msd_matrix_mean, label=run + num_robots, marker='o')
-
+                plt.plot(times, msd_matrix_mean, label=(run // num_robots) + 1, marker='o')
+                plt.legend()
                 plt.xticks(np.arange(0, msd_matrix_mean.size + window_size, 10) * 10,
                            labels=np.arange(0, msd_matrix_mean.size + window_size, 10) // 10)
                 plt.ylim(0, 0.015)
@@ -171,6 +183,11 @@ def MSD_per_run_per_robot(main_folder, folder_experiments):
                 exit(-1)
 
             np_position = np.load(os.path.join(main_folder, folder_experiments, fileName))
+
+            if debug_time:
+                print('\tWARNING: remove after test')
+                np_position = np_position[:time_window]
+
             print('\t np_position.shape:', np_position.shape)
 
 
@@ -180,7 +197,9 @@ def MSD_per_run_per_robot(main_folder, folder_experiments):
 
                 msd_matrix = np.array([])
                 for f in range(window_size, np_position.shape[0], window_size):
-                    #     print('tf: {}, ti: {}'.format(f, f - window_size))
+                    # if f > 60:
+                    #     break
+                    # print('tf: {}, ti: {}'.format(f, f - window_size))
                     tf = single_run[f]
                     ti = single_run[f - window_size]
                     #     print('tf.shape:', tf.shape)
@@ -203,6 +222,8 @@ def MSD_per_run_per_robot(main_folder, folder_experiments):
                 plt.grid(alpha=0.5, linestyle=':')
                 plt.title('run ' + str(run//num_robots) + ' ' + fileName[:-4])
 
+                plt.axhline(y=0.004, color='r', linestyle='-')
+
                 figName = 'msd_per_robot_' + fileName[:-13] + 'run#' + str(run//num_robots) + '_' + exp_type + '.png'
                 saveDir = os.path.join('Plots', folder_experiments.split('/')[1], sys._getframe().f_code.co_name)
                 print(colored("\tSaving figure at:", 'blue'), os.path.join(saveDir, figName))
@@ -214,4 +235,4 @@ def MSD_per_run_per_robot(main_folder, folder_experiments):
                 plt.close()
                 # plt.show()
 
-        break
+        # break

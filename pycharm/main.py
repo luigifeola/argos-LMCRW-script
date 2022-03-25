@@ -23,7 +23,17 @@ if __name__ == '__main__':
     # folder_experiments = 'results/FEB_2022_5#robots_rho#0.9_oldTable_noRing/pkl_pos'
     # folder_experiments = 'results/FEB_2022_5#robots_rho#0.9_newTable_exactLinVel/pkl_pos'
     # folder_experiments = 'results/FEB_2022_5#robots_rho#0.9_newTable_BUG/pkl_pos'
-    folder_experiments = 'results/FEB_2022_5#robots_rho#0.9_oldTable_BUG/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_5#robots_rho#0.9_oldTable_BUG/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_10#robots_rho#0.9_oldTable_BUGMIXED/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_5#robots_rho#0.9_oldTable_BUG_correctCalib/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_5#robots_rho#0.9_oldTable_BUG_wrongCalib/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_5#robots_rho#0.9_newBatteries_TEST/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_20#robots_rho#0.9_oldBatteries/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_20#robots_rho#0.9_newBatteries_TEMP/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_20#robots_rho#0.9_newCalib/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_20#robots_rho#0.9_newCalib_newBatteries/pkl_pos'
+    folder_experiments = 'results/MAR_2022_20#robots_rho#0.9/pkl_pos'
+    # folder_experiments = 'results/FEB_2022_5MinutesTest/pkl_pos'
 
     print(colored("--------------MSD_per_run------------------------------------------", 'green'))
     MSD_per_run(main_folder, folder_experiments)
